@@ -1,0 +1,106 @@
+/* Trong tệp styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+/* Trong tệp styles.css */
+
+/* Phần lọc thời gian và tìm kiếm */
+#timeFilterSection,
+#searchSection {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+input {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Hiệu ứng hover cho nút lọc và tìm kiếm */
+button:hover {
+    background-color: #45a049;
+    color: #fff;
+}
+
+/* Hiệu ứng hover cho input */
+input:hover {
+    border: 1px solid #45a049;
+}
+
+/* Hiệu ứng focus cho input */
+input:focus {
+    outline: none;
+    border: 1px solid #4CAF50;
+}
+
+/* Tùy chỉnh cho bảng dữ liệu */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}

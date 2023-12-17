@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Hành Khách</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Thông Tin Hành Khách</h1>
+    <!-- Thêm ô lọc theo thời gian
+    <div id="timeFilterSection">
+        <label for="startTimeFilter">Từ thời gian:</label>
+        <input type="datetime-local" id="startTimeFilter">
+
+        <label for="endTimeFilter">Đến thời gian:</label>
+        <input type="datetime-local" id="endTimeFilter">
+
+        <button onclick="applyTimeFilter()">Lọc</button>
+    </div> -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Điểm Khởi Hành</th>
+                <th>Ngày Lên Tàu</th>
+                <th>Tháng Lên Tàu</th>
+                <th>Năm Lên Tàu</th>
+                <th>Giờ Lên Tàu</th>
+                <th>Điểm Đến</th>
+                <th>Ngày Xuống Tàu</th>
+                <th>Tháng Xuống Tàu</th>
+                <th>Năm Xuống Tàu</th>
+                <th>Giờ Xuống Tàu</th>
+                <th>Thanh Toán</th>
+                <th>Trạng Thái</th>
+            </tr>
+        </thead>
+        <tbody id="passengerTableBody">
+            <!-- Dữ liệu hành khách sẽ được hiển thị ở đây -->
+        </tbody>
+        <!-- <tbody id="passengerTableBodyend"> -->
+            <!-- Dữ liệu hành khách sẽ được hiển thị ở đây -->
+        <!-- </tbody> -->
+    </table>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2sxWwAR_Q1f13MiUx-hrpn3Z8m2PcXE0",
+            authDomain: "thongtinvetau.firebaseapp.com",
+            databaseURL: "https://thongtinvetau-default-rtdb.firebaseio.com",
+            projectId: "thongtinvetau",
+            storageBucket: "thongtinvetau.appspot.com",
+            messagingSenderId: "750250165742",
+            appId: "1:750250165742:web:37863eb7507f26f0b13aff",
+            measurementId: "G-P033V4D4YT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const passengersRef = ref(database, "hanhkhach");
+
+        onValue(passengersRef, (snapshot) => {
+            const passengersFromFirebase = [];
+
+            snapshot.forEach((childSnapshot) => {
+                const id = childSnapshot.key;
+                const passenger = { id, ...childSnapshot.val() };
+                passengersFromFirebase.push(passenger);
+            });
+
+            displayPassengers(passengersFromFirebase,'passengerTableBody');
+        });
+
+        // const passengersRefend = ref(database, "hanhkhachend");
+
+        // onValue(passengersRefend, (snapshot) => {
+        //     const passengersFromFirebaseend = [];
+
+        //     snapshot.forEach((childSnapshot) => {
+        //         const id = childSnapshot.key;
+        //         const passenger = { id, ...childSnapshot.val() };
+        //         passengersFromFirebaseend.push(passenger);
+        //     });
+
+        //     displayPassengers(passengersFromFirebaseend,'passengerTableBodyend');
+        // });
+
+        function displayPassengers(passengersToDisplay, tableBodyId) {
+            const tableBody = document.getElementById(tableBodyId);
+
+            tableBody.innerHTML = "";
+
+            for (let i = 0; i < passengersToDisplay.length; i++) {
+                const row = tableBody.insertRow(i);
+
+                const cellId = row.insertCell(0);
+                cellId.innerText = passengersToDisplay[i].id;
+
+                const cellStartLocation = row.insertCell(1);
+                cellStartLocation.innerText = passengersToDisplay[i].diemlen;
+
+                const cellBoardingDay = row.insertCell(2);
+                cellBoardingDay.innerText = passengersToDisplay[i].ngaylen;
+
+                const cellBoardingMonth = row.insertCell(3);
+                cellBoardingMonth.innerText = passengersToDisplay[i].thanglen;
+
+                const cellBoardingYear = row.insertCell(4);
+                cellBoardingYear.innerText = passengersToDisplay[i].namlen;
+
+                const cellBoardingTime = row.insertCell(5);
+                cellBoardingTime.innerText = passengersToDisplay[i].giolen;
+
+                const cellDestination = row.insertCell(6);
+                cellDestination.innerText = passengersToDisplay[i].diemxuong;
+
+                const cellDisembarkingDay = row.insertCell(7);
+                cellDisembarkingDay.innerText = passengersToDisplay[i].ngayxuong;
+
+                const cellDisembarkingMonth = row.insertCell(8);
+                cellDisembarkingMonth.innerText = passengersToDisplay[i].thangxuong;
+
+                const cellDisembarkingYear = row.insertCell(9);
+                cellDisembarkingYear.innerText = passengersToDisplay[i].namxuong;
+
+                const cellDisembarkingTime = row.insertCell(10);
+                cellDisembarkingTime.innerText = passengersToDisplay[i].gioxuong;
+
+                const cellPayment = row.insertCell(11);
+                cellPayment.innerText = passengersToDisplay[i].thanhtoan;
+
+                const cellStatus = row.insertCell(12);
+                cellStatus.innerText = passengersToDisplay[i].trangthai;
+            }
+        }
+
+    //     function applyTimeFilter() {
+    //     // Get start and end time values from the input fields
+    //     const startTime = new Date(document.getElementById("startTimeFilter").value);
+    //     const endTime = new Date(document.getElementById("endTimeFilter").value);
+
+    //     // Perform filtering based on time range
+    //     const filteredPassengers = passengers.filter(passenger => {
+    //         const boardingTime = new Date(passenger.thoigianlen);
+    //         return boardingTime >= startTime && boardingTime <= endTime;
+    //     });
+
+    //     // Display the filtered passengers
+    //     displayPassengers(filteredPassengers);
+    // }
+
+    </script>
+</body>
+</html>
